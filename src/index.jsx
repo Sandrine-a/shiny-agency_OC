@@ -1,24 +1,42 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from './pages/Home'
+import App from './pages/Home/Home'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Survey from './pages/Survey'
+
+import Survey from './pages/Survey/Index'
+import Header from './components/Header/Index'
+import Error from './components/Error/Index'
+import Results from './pages/Results/Index'
+import Freelances from './pages/Freelances/Index'
+import Footer from './components/Footer/Index'
+import { SurveyProvider, ThemeProvider } from './utils/context/Index'
+import GlobalStyle from './utils/styles/GlobalStyle'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Router>
-      <Routes>
-        <Route exact path="/" element={<App />} />
+      <ThemeProvider>
+        <SurveyProvider>
+          <GlobalStyle />
+          <Header />
 
-        <Route path="/survey" element={<Survey />} />
-      </Routes>
+          <Routes>
+            <Route exact path="/" element={<App />} />
 
-      {/* <Route path="/survey">
-        <Survey />
-      </Route> */}
+            <Route path="/freelances" element={<Freelances />} />
+
+            <Route path="/survey/:questionNumber" element={<Survey />} />
+
+            <Route path="/results" element={<Results />} />
+
+            <Route path="*" element={<Error />} />
+          </Routes>
+          <Footer />
+        </SurveyProvider>
+      </ThemeProvider>
     </Router>
   </React.StrictMode>
 )
